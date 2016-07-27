@@ -1,0 +1,22 @@
+User stories:
+  - Play normal hangman with 6 chances ✔
+  - Display hangman on the left and word on the right ✔
+  - Custom keyboard - give feedback ✔
+  - Display score at all times ✔
+  - No hints ✔
+  - All 4 components - sticky figure, score, guesses, keyboard - should be loosely coupled so that they can be rearranged later. ✔
+  - multiple players can play at once.
+
+Flow:
+  - Start: Initial screen with a word and blanks. User can start directly.
+  - Play: If guessed correctly, score goes up and new word will appear.
+  - Over: If guessed incorrectly, game gets over.
+
+
+Firebase states:
+  - score
+  - stick figure state - via chances left
+  - guess state (letters present in the blanks)
+  - keyboard state
+
+Move single version to GitHub
