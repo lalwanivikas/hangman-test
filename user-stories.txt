@@ -18,5 +18,3 @@ Firebase states:
   - stick figure state - via chances left
   - guess state (letters present in the blanks)
   - keyboard state
-
-Move single version to GitHub

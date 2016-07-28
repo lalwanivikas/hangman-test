@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 100%;
+  font-family: sans-serif;
+  color: #444;
+  margin-top: 2%;
+}
+
+.sf {
+  border-radius: 2px;
+}
+
+.column-container {
+  display: inline-block;
+}
+
+.guess {
+  display: inline-block;
+  text-align: center;
+  width: 55%;
+  vertical-align: top;
+  margin-top: 12vh;
+}
+
+.guess div {
+  margin: 4% 0;
+}
+
+.guess span {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  margin: 2px;
+  text-align: center;
+  vertical-align: bottom;
+  border-bottom: 2px solid #000;
+}
+
+.score-container {
+  text-align: center;
+}
+
+hr {
+  background-color: #ddd;
+  height: 1px;
+  border: 0;
+  margin: .5rem 0;
+}
+
+.keyboard {
+  margin: 0 auto;
+  text-align: center;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+}
+
+.keyboard span {
+  /*height: 25px;
+  width: 16px;*/
+  height: 1.6rem;
+  width: 5.5%;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid #000;
+  border-radius: 2px;
+  margin: .2rem 0;
+  padding: 7px 4px 0 4px;
+}
+
+.keyboard span.incorrect {
+  background-color: #EF5350;
+  color: #FFF;
+  pointer-events: none;
+}
+
+.keyboard span.correct {
+  background-color: #81C784;
+  color: #FFF;
+  pointer-events: none;
+}
