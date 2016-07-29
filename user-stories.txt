@@ -5,7 +5,7 @@ User stories:
   - Display score at all times ✔
   - No hints ✔
   - All 4 components - sticky figure, score, guesses, keyboard - should be loosely coupled so that they can be rearranged later. ✔
-  - multiple players can play at once.
+  - multiple players can play at once. ✔
 
 Flow:
   - Start: Initial screen with a word and blanks. User can start directly.

@@ -13,9 +13,9 @@ var lettersGuessed = "";
 var guessWordDiv = document.querySelector('.guess');
 var letterRow;
 var keyboardKeys = document.querySelectorAll('.key-row span');
+var keysArray = [];
 var chancesLeft = 6;
 var timeoutId;
-var keysArray = [];
 
 /*
  *  Setting up canvas for drawing hangman stick figure
@@ -44,7 +44,7 @@ var setCanvas = function() {
   ctx.lineTo(canvasWidth / 2, 20);
   ctx.stroke();
 }
-
+setCanvas();
 
 /*
  *  methods for drawing stick-figure
@@ -105,7 +105,7 @@ var generateRandomWord = function() {
 */
 var setBlanks = function(word) {
 
-  // currentWord = "hasta la vista"
+  // word = "hasta la vista"
   var words = word.split(" "); // words = ["hasta", "la", "vista"]
 
   guessWordDiv.innerHTML = "";
@@ -124,30 +124,37 @@ var setBlanks = function(word) {
 
 var updateKeyboardAndGuess = function(_currentWord, _lettersGuessed) {
 
-  setBlanks(_currentWord);
+  // _currentWord = "hola hey"
+  // _lettersGuessed = "abcde"
 
+  // updating keyboard
   for (var i = 0; i < keysArray.length; i++) {
     keyboardKeys[i].className = "";
-  }
-
-
-  for (var i = 0; i < _lettersGuessed.length; i++) {
-    var keyPosition = keysArray.indexOf(_lettersGuessed[i]);
-    if (_currentWord.indexOf(_lettersGuessed[i]) > -1) {
-      keyboardKeys[keyPosition].className = "correct";
-      var joinedWord = _currentWord.split(" ").join("");
-      for(var j=0; j<joinedWord.length; j++) {
-        if (joinedWord[j] === _lettersGuessed[i]) {
-          letterRow[j].innerHTML = _lettersGuessed[i];
-        }
+    for (var j = 0; j < _lettersGuessed.length; j++) {
+      if(keysArray[i] ===  _lettersGuessed[j] && _currentWord.indexOf(_lettersGuessed[j]) > -1) {
+        keyboardKeys[i].className = "correct";
+      } else if (keysArray[i] ===  _lettersGuessed[j] && _currentWord.indexOf(_lettersGuessed[j]) === -1) {
+        keyboardKeys[i].className = "incorrect";
       }
-    } else {
-        if (chancesLeft > 0) {
-          keyboardKeys[keyPosition].className = "incorrect";
-          chancesLeft--;
-        }
     }
   }
+
+  chancesLeft = 6;
+  for (var i = 0; i < keyboardKeys.length; i++) {
+    if (keyboardKeys[i].className === "incorrect") {
+      chancesLeft--;
+    }
+  }
+
+  // updating blanks
+  setBlanks(_currentWord);
+  var joinedWord = _currentWord.split(" ").join("");
+  for(var k = 0; k < joinedWord.length; k++) {
+    if (_lettersGuessed.indexOf(joinedWord[k]) !== -1) {
+      letterRow[k].innerHTML = joinedWord[k];
+    }
+  }
+
 }
 
 for (var i = 0; i < keyboardKeys.length; i++) {
@@ -161,8 +168,11 @@ for (var i = 0; i < keyboardKeys.length; i++) {
   });
 }
 
+var checkGameState = function() {
 
-var updateStickFigure = function(_chancesLeft) {
+  if (chancesLeft === 0) {
+    gameOver();
+  }
 
   // correct word complete => reset game and update score
   var inputWord = "";
@@ -171,9 +181,14 @@ var updateStickFigure = function(_chancesLeft) {
     inputWord += letterRow[i].innerHTML;
   }
   if (currentWord.split(" ").join("") === inputWord) {
-    upSyncGameState(score++, 6, generateRandomWord(), "");
+    updateUI(score++, 6, currentWord, "");
+    upSyncGameState(score, 6, generateRandomWord(), "");
     return;
   }
+}
+
+
+var updateStickFigure = function(_chancesLeft) {
 
   // incorrect guess => draw body part of stick figure
   setCanvas();
@@ -226,7 +241,9 @@ var updateStickFigure = function(_chancesLeft) {
 var gameOver = function() {
   clearTimeout(timeoutId);
   alert("Game Over. Your score was " + score + ". Click OK to play again.");
-  upSyncGameState(0, 6, generateRandomWord(), "");
+  currentWord = generateRandomWord();
+  updateUI(0, 6, currentWord, "");
+  upSyncGameState(0, 6, currentWord, "");
 }
 
 
@@ -267,19 +284,11 @@ var updateValues = function(snapshot) {
   }
 
   console.log(score + " - " + chancesLeft + " - " + currentWord + " - " + lettersGuessed);
+  checkGameState();
   updateUI(score, chancesLeft, currentWord, lettersGuessed);
-
 }
 
 
 firebase.database().ref().on('value', function(snapshot) {
   updateValues(snapshot);
 });
-
-// var init = function() {
-//   firebase.database().ref().once('value').then(function(snapshot) {
-//     updateValues(snapshot);
-//   });
-// }
-
-// window.onload = init;
