@@ -18,6 +18,17 @@ body {
   display: inline-block;
 }
 
+.theme {
+  position: absolute;
+  font-family: monospace;
+  right: 10px;
+  top: 10px;
+  background-color: rgba(0,0,0, 0.8);
+  color: #fff;
+  padding: 4px 6px;
+  border-radius: 2px;
+}
+
 .guess {
   display: inline-block;
   text-align: center;

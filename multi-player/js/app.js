@@ -5,7 +5,7 @@ var canvas = document.querySelector('.sf');
 var ctx = canvas.getContext('2d');
 var canvasWidth;
 var canvasHeight;
-var wordList = ["hello", "hey", "hi", "hola", "hasta la vista", "good day"];
+var wordList =  ["delhi", "mumbai", "new york", "london", "buenos aires", "tokyo", "berlin", "los angeles", "moscow", "hong kong", "rome", "prague", "dublin","amitabh bacchan", "shah rukh khan", "amir khan", "salman khan", "bobby deol", "akshay kumar","pink", "red", "purple", "green", "white", "black","tea", "coffee", "beer", "wine", "margarita", "water", "lemon tea"];
 var currentWord;
 var score = 0;
 var scoreContainer = document.querySelector('.current-score');
@@ -16,6 +16,14 @@ var keyboardKeys = document.querySelectorAll('.key-row span');
 var keysArray = [];
 var chancesLeft = 6;
 var timeoutId;
+var themeContainer = document.querySelector('.theme');
+
+var themes = {
+  "world city": ["delhi", "mumbai", "new york", "london", "buenos aires", "tokyo", "berlin", "los angeles", "moscow", "hong kong", "rome", "prague", "dublin"],
+  "bollywood superstar": ["amitabh bacchan", "shah rukh khan", "amir khan", "salman khan", "bobby deol", "akshay kumar"],
+  "color": ["pink", "red", "purple", "green", "white", "black"],
+  "beverage": ["tea", "coffee", "beer", "wine", "margarita", "water", "lemon tea"]
+};
 
 /*
  *  Setting up canvas for drawing hangman stick figure
@@ -95,7 +103,7 @@ var stickFigure = {
  *  ==== does not modify anything ====
 */
 var generateRandomWord = function() {
-  return wordList[Math.floor(Math.random() * 6)];
+  return wordList[Math.floor(Math.random() * wordList.length)];
 }
 
 
@@ -286,6 +294,13 @@ var updateValues = function(snapshot) {
   console.log(score + " - " + chancesLeft + " - " + currentWord + " - " + lettersGuessed);
   checkGameState();
   updateUI(score, chancesLeft, currentWord, lettersGuessed);
+
+  for (var theme in themes) {
+    if (themes[theme].indexOf(currentWord) > -1) {
+      themeContainer.innerHTML = theme
+    }
+  }
+
 }
 
 
