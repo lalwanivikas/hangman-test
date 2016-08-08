@@ -21,9 +21,21 @@
     </div>
 
     <!-- word to be guessed by user -->
-    <div class="timer"><span class="time-remaining-container"></span>s</div>
     <div class="theme"></div>
     <div class="guess"></div>
+
+    <hr>
+
+    <div class="player-status">
+
+      <div class="contribution-container">Your contribution:
+        <span class="contribution">75</span>%
+      </div>
+
+      <div class="turn-container">
+        <span class="time-remaining"></span>
+      </div>
+    </div>
 
     <hr>
 
@@ -68,6 +80,20 @@
     </div>
 
   </div>
+
+  <!-- firebase setup -->
+  <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDvy5VQ6sP26CG85GX0SNe34Q0-ZLnbH7E",
+      authDomain: "hangman-collab-mode.firebaseapp.com",
+      databaseURL: "https://hangman-collab-mode.firebaseio.com",
+      storageBucket: "hangman-collab-mode.appspot.com",
+    };
+    firebase.initializeApp(config);
+  </script>
+
 
   <script type="text/javascript" src="./js/app.js"></script>
 

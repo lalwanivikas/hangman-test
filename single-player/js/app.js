@@ -5,7 +5,7 @@ var canvas = document.querySelector('.sf');
 var ctx = canvas.getContext('2d');
 var canvasWidth;
 var canvasHeight;
-var wordList = ["hello", "hey", "hi", "hola", "hasta la vista", "good day"];
+var wordList =  ["delhi", "mumbai", "new york", "london", "buenos aires", "tokyo", "berlin", "los angeles", "moscow", "hong kong", "rome", "prague", "dublin","amitabh bacchan", "shah rukh khan", "amir khan", "salman khan", "bobby deol", "akshay kumar","pink", "red", "purple", "green", "white", "black","tea", "coffee", "beer", "wine", "margarita", "water", "lemon tea"];
 var currentWord;
 var joinedWord;
 var score = 0;
@@ -16,7 +16,18 @@ var letterRow;
 var keyboardKeys = document.querySelectorAll('.key-row span');
 var chancesLeft = 6;
 var timeoutId;
+var timeRemainingDiv = document.querySelector('.time-remaining-container');
+var timeRemaining;
+var timerId;
 
+var themeContainer = document.querySelector('.theme');
+
+var themes = {
+  "world city": ["delhi", "mumbai", "new york", "london", "buenos aires", "tokyo", "berlin", "los angeles", "moscow", "hong kong", "rome", "prague", "dublin"],
+  "bollywood superstar": ["amitabh bacchan", "shah rukh khan", "amir khan", "salman khan", "bobby deol", "akshay kumar"],
+  "color": ["pink", "red", "purple", "green", "white", "black"],
+  "beverage": ["tea", "coffee", "beer", "wine", "margarita", "water", "lemon tea"]
+};
 
 /*
 **  Setting up canvas for drawing hangman stick figure
@@ -48,8 +59,13 @@ var setCanvas = function() {
 
 var setBlanks = function() {
 
-  currentWord = wordList[Math.floor(Math.random() * 6)];
+  currentWord = wordList[Math.floor(Math.random() * wordList.length)];
   joinedWord = currentWord.split(" ").join("");
+  for (var theme in themes) {
+    if (themes[theme].indexOf(currentWord) > -1) {
+      themeContainer.innerHTML = theme;
+    }
+  }
 
   // currentWord = "hasta la vista"
   var words = currentWord.split(" "); // words = ["hasta", "la", "vista"]
@@ -145,7 +161,8 @@ var updateGameState = function() {
 
 var gameOver = function() {
   clearTimeout(timeoutId);
-  alert("Game Over. Your score was " + score + ". Click OK to play again.");
+  clearInterval(timerId);
+  alert("Game Over. Your score was " + score + ". And the correct answer was " + currentWord + ". Click OK to play again.");
   resetGame();
   init();
 }
@@ -174,6 +191,11 @@ var generateNextWord = function() {
   resetGame();
   setCanvas();
   setBlanks();
+
+  timeRemaining = 60;
+  timeRemainingDiv.innerHTML = timeRemaining;
+  clearInterval(timerId);
+  timerId = setInterval(runTimer, 1000);
 }
 
 
@@ -219,12 +241,23 @@ var stickFigure = {
 
 }
 
+var runTimer = function() {
+  timeRemaining--;
+  timeRemainingDiv.innerHTML = timeRemaining;
+  if(timeRemaining < 0) {
+    gameOver();
+  }
+}
 
 var init = function() {
   score = 0;
   scoreContainer.innerHTML = score;
   setCanvas();
   setBlanks();
+
+  timeRemaining = 60;
+  timeRemainingDiv.innerHTML = timeRemaining;
+  timerId = setInterval(runTimer, 1000);
 }
 
 window.onload = init;

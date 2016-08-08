@@ -18,21 +18,10 @@ body {
   display: inline-block;
 }
 
-.timer {
-  position: absolute;
-  font-family: monospace;
-  right: 10px;
-  top: 10px;
-  background-color: rgba(0,0,0, 0.8);
-  color: #fff;
-  padding: 4px;
-  border-radius: 2px;
-}
-
 .theme {
   position: absolute;
   font-family: monospace;
-  right: 45px;
+  right: 10px;
   top: 10px;
   background-color: rgba(0,0,0, 0.8);
   color: #fff;
@@ -71,6 +60,26 @@ hr {
   height: 1px;
   border: 0;
   margin: .5rem 0;
+}
+
+.player-status {
+  margin: -.5rem 0;
+  padding: .5rem;
+  font-size: .9rem;
+  color: #fff;
+  background-color: #607d8b;
+}
+
+.player-status div {
+  display: inline-block;
+}
+
+.contribution-container {
+  width: 55%;
+}
+
+.turn-container {
+  width: 42%;
 }
 
 .keyboard {
